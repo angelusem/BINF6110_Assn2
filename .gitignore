@@ -1,0 +1,12 @@
+# raw data (files too big to upload)
+data/
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+*.sra
+
+# large indexes / intermediate files
+ref/*index*
+ref/*.idx
+results/quants/*
