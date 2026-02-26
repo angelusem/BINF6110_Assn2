@@ -1,4 +1,5 @@
 #ASSN2 BINF6110: DE in yeast biofilm
+#draft-feb25
 
 #loading required packages
   library(readr)
@@ -12,6 +13,7 @@
   library(clusterProfiler)
   library(org.Sc.sgd.db)
   library(enrichplot)
+  library(tidyr)
 
 ## PART 1: DE Analysis using DeSeq2 ----
 
@@ -84,6 +86,7 @@ p_pca <- ggplot(pca, aes(PC1, PC2, color = stage, label = name)) +
   xlab(paste0("PC1: ", percentVar[1], "% variance")) +
   ylab(paste0("PC2: ", percentVar[2], "% variance")) +
   theme_bw()
+p_pca
 
 ggsave("results/figures/PCA_stage.png", p_pca, width = 6, height = 4, dpi = 300)
 # Is early vs mature the largest shift? 
@@ -148,6 +151,7 @@ gsea_bp <- gseGO(
 )
 
 dir.create("results/tables", recursive=TRUE, showWarnings=FALSE)
+
 write.csv(as.data.frame(gsea_bp), "results/tables/GSEA_GO_BP_early_vs_mature.csv", row.names=FALSE)
 # plotting a dotplot
 p1 <- dotplot(gsea_bp, showCategory = 20) + ggtitle("GSEA GO BP: early vs mature")
@@ -169,8 +173,88 @@ core_df <- as.data.frame(res_early_mature)[core, c("log2FoldChange","padj","base
 core_df$gene <- rownames(core_df)
 core_df <- core_df[order(core_df$padj), ]
 head(core_df, 10)
-# to get gene names and descriptions for discussion
+# to get gene names and descriptions 
 AnnotationDbi::select(org.Sc.sgd.db,
                       keys = core_df$gene[1:10],
                       keytype = "ORF",
                       columns = c("GENENAME","DESCRIPTION"))
+# to pick 1-2 GO terms
+gsea_res <- as.data.frame(gsea_bp)
+
+top_pos <- gsea_res |>
+  dplyr::filter(NES > 0) |>
+  dplyr::arrange(p.adjust) |>
+  dplyr::slice_head(n = 3)
+
+top_neg <- gsea_res |>
+  dplyr::filter(NES < 0) |>
+  dplyr::arrange(p.adjust) |>
+  dplyr::slice_head(n = 3)
+
+top_pos[, c("ID","Description","NES","p.adjust","setSize")]
+top_neg[, c("ID","Description","NES","p.adjust","setSize")]
+# finiding the leading edge gene in each 
+pick_core <- function(term_id, gsea_obj, res_de){
+  r <- as.data.frame(gsea_obj)
+  row <- r[r$ID == term_id, ][1, ]
+  core <- strsplit(row$core_enrichment, "/")[[1]]
+  
+  out <- as.data.frame(res_de)[core, c("log2FoldChange","padj","baseMean","stat")]
+  out$ORF <- rownames(out)
+  out <- out[order(out$padj), ]
+  out
+}
+
+core_pos <- pick_core(top_pos$ID[1], gsea_bp, res_early_mature)
+core_neg <- pick_core(top_neg$ID[1], gsea_bp, res_early_mature)
+
+head(core_pos, 15)
+head(core_neg, 15)
+# choosing my  top canidates
+choose_genes <- function(core_df, n = 4, baseMean_min = 20){
+  core_df |>
+    dplyr::filter(!is.na(padj), baseMean >= baseMean_min) |>
+    dplyr::arrange(padj, dplyr::desc(abs(log2FoldChange))) |>
+    dplyr::slice_head(n = n)
+}
+
+cand_pos <- choose_genes(core_pos, n = 4)
+cand_neg <- choose_genes(core_neg, n = 4)
+
+cand_pos
+cand_neg
+# annotation for these genes
+annotate_orfs <- function(orfs){
+  AnnotationDbi::select(
+    org.Sc.sgd.db,
+    keys = orfs,
+    keytype = "ORF",
+    columns = c("GENENAME","DESCRIPTION")
+  )
+}
+
+annotate_orfs(cand_pos$ORF)
+annotate_orfs(cand_neg$ORF)
+# plotting them 
+
+genes <- c("YJL052W","YCR012W","YJL102W","YML009C")
+
+mat <- assay(vsd)[intersect(genes, rownames(vsd)), , drop = FALSE]
+
+df <- as.data.frame(t(mat))
+df$stage <- factor(colData(vsd)$stage, levels = c("early","thin","mature"))
+
+df_long <- pivot_longer(df, cols = -stage, names_to = "gene", values_to = "expr")
+
+sum_df <- df_long %>%
+  group_by(gene, stage) %>%
+  summarise(mean = mean(expr), se = sd(expr)/sqrt(n()), .groups = "drop")
+
+p_4genes <- ggplot(sum_df, aes(stage, mean, group = gene, color = gene)) +
+  geom_line() +
+  geom_point(size = 2) +
+  geom_errorbar(aes(ymin = mean - se, ymax = mean + se), width = 0.1) +
+  theme_bw() +
+  labs(y = "VST expression", x = "stage")
+
+ggsave("results/figures/chosenGenesFA_stage.png", p_4genes, width = 6, height = 4, dpi = 300)
