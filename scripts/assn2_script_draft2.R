@@ -162,10 +162,13 @@ gsea_res <- as.data.frame(gsea_bp)
 write.csv(gsea_res, "results/tables/GSEA_GO_BP_early_vs_mature.csv", row.names=FALSE)
 # plotting a dotplot
 p1 <- dotplot(gsea_bp, showCategory = 20) + ggtitle("GSEA GO BP: early vs mature")
+p1
 ggsave("results/figures/GSEA_GO_BP_dotplot_early_vs_mature.png", p1, width=8, height=6, dpi=300)
 # plotting an enrichment curve for the top term
 
 p2 <- gseaplot2(gsea_bp, geneSetID = 1, title = gsea_bp@result$Description[1])
+p2
+
 ggsave("results/figures/GSEA_GO_BP_topTerm_curve_early_vs_mature.png", p2, width=8, height=5, dpi=300)
 
 # making a table for results
