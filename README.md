@@ -81,12 +81,13 @@ Conversely, representative leading-edge genes from the negatively enriched mitoc
 
 *Figure 6. VST expression trajectories for selected leading-edge genes across stages.* Stage trajectories are shown for four selected ORFs (YJL052W, YCR012W, YJL102W, YML009C). Points represent mean VST expression across replicates within each stage; error bars represent standard error of the mean (SE = sd/√n) computed within stage.
 
-
 **Discussion**
 
-The results of this analysis indicate coordinated changes in functional modules rather than isolated gene-level effects. Principal component analysis and differential expression clearly distinguished early and mature biofilm transcriptomes, with thin samples occupying an intermediate position. This overall structure is consistent with the developmental progression described in the original Mardanov et al. (2020) velum study.
+The results of this analysis indicate coordinated changes in functional modules rather than isolated gene-level effects. Principal component analysis and differential expression clearly distinguished early and mature velum transcriptomes, with thin samples occupying an intermediate position. This overall structure is consistent with the staged velum sampling and developmental progression described in Mardanov et al. (2020).
 
-In the early versus mature comparison, glycolysis- and nucleotide metabolism–associated genes were enriched toward the early-upregulated end of the ranked list. This pattern is reflected at the gene level by higher early-stage expression of TDH1 (YJL052W) and PGK1 (YCR012W), which encode glycolytic enzymes. In contrast, genes associated with mitochondrial translation were enriched toward the mature-upregulated end of the ranked list, consistent with higher mature-stage expression of MEF2 (YJL102W) and MRPL39 (YML009C), both components of the mitochondrial translation machinery. Together, these results indicate stage-associated differences in the relative representation of glycolytic and mitochondrial translation transcripts across velum development.
+In the early versus mature comparison, glycolysis- and nucleotide/sugar metabolism–associated genes were enriched toward the early-upregulated end of the ranked list. This pattern is reflected at the gene level by higher early-stage expression of **TDH1 (YJL052W)** and **PGK1 (YCR012W)**, which encode core glycolytic enzymes involved in glycolysis/gluconeogenesis: TDH1 encodes for Glyceraldehyde-3-phosphate dehydrogenase (Linck et al. 2014\) and PGK1 for 3-phosphoglycerate kinase (Lam and Marmur 1977\). Notably, this directionality aligns with the original dataset study: Mardanov et al. report strong downregulation of glycolysis enzymes including **PGK1** and **TDH1**, and further note that expression of most glycolytic genes decreases during velum development, which is consistent with glucose exhaustion and a metabolic shift away from fermentative glycolysis.
+
+In contrast, genes associated with mitochondrial translation were enriched toward the mature-upregulated end of the ranked list, consistent with higher mature-stage expression of **MEF2 (YJL102W)**, a mitochondrial translation factor, and **MRPL39 (YML009C)**, a mitochondrial large-subunit ribosomal protein. Together, these results indicate stage-associated differences in the relative representation of glycolytic versus mitochondrial translation transcripts across velum development.
 
 These findings should be interpreted within the limitations of bulk RNA-seq. Transcript abundance does not necessarily reflect protein abundance or enzymatic activity (Vogel and Marcotte 2012), and GO categories are hierarchical and partially overlapping (Ashburner et al. 2000). Future work incorporating proteomic or metabolomic profiling, as well as more detailed time-series analysis of intermediate stages, could further clarify the biological implications of these transcriptional patterns.
 
@@ -102,7 +103,11 @@ Geistlinger, Ludwig, Gergely Csaba, Mara Santarelli, Marcel Ramos, Lucas Schiffe
 
 Korotkevich, Gennady, Vladimir Sukhov, Nikolay Budin, Boris Shpak, Maxim N. Artyomov, and Alexey Sergushichev. 2016\. “Fast Gene Set Enrichment Analysis.” 
 
+Lam, K. B., and J. Marmur. 1977\. “Isolation and Characterization of Saccharomyces Cerevisiae Glycolytic Pathway Mutants.” *Journal of Bacteriology* 130(2):746–49. doi:10.1128/jb.130.2.746-749.1977. 
+
 Li, Zhenjian, Yong Chen, Dong Liu, Nan Zhao, Hao Cheng, Hengfei Ren, Ting Guo, Huanqing Niu, Wei Zhuang, Jinglan Wu, and Hanjie Ying. 2015\. “Involvement of Glycolysis/Gluconeogenesis and Signaling Regulatory Pathways in Saccharomyces Cerevisiae Biofilms during Fermentation.” *Frontiers in Microbiology* 6\. doi:10.3389/fmicb.2015.00139. 
+
+Linck, Annabell, Xuan-Khang Vu, Christine Essl, Charlotte Hiesl, Eckhard Boles, and Mislav Oreb. 2014\. “On the Role of GAPDH Isoenzymes during Pentose Fermentation in Engineered *Saccharomyces Cerevisiae*.” *FEMS Yeast Research* 14(3):389–98. doi:10.1111/1567-1364.12137. 
 
 Mardanov, Andrey V., Mikhail A. Eldarov, Alexey V. Beletsky, Tatiana N. Tanashchuk, Svetlana A. Kishkovskaya, and Nikolai V. Ravin. 2020\. “Transcriptome Profile of Yeast Strain Used for Biological Wine Aging Revealed Dynamic Changes of Gene Expression in Course of Flor Development.” *Frontiers in Microbiology* 11:538. doi:10.3389/fmicb.2020.00538. 
 
