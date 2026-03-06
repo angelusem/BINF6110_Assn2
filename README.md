@@ -28,13 +28,13 @@ Variance-stabilized expression values showed strong stage-associated structure. 
 
 **Differential expression across stages**
 
-DESeq2 identified widespread differential expression across all contrasts (FDR \< 0.05), with the largest number and strongest effect sizes in early vs mature. Using a more stringent subset (**FDR \< 0.05 and |log2FC| ≥ 1**), early vs mature still retained the most DE genes, consistent with the greatest transcriptional remodeling occurring between the earliest and latest stages of velum biofilm development. The results for each contrast are summarized in Table 1\.
+DESeq2 identified widespread differential expression across all contrasts (FDR < 0.05), with the largest number and strongest effect sizes in early vs mature. Using a more stringent subset (**FDR < 0.05 and |log2FC| ≥ 1**), early vs mature still retained the most DE genes, consistent with the greatest transcriptional remodeling occurring between the earliest and latest stages of velum biofilm development. The results for each contrast are summarized in Table 1.
 
-**Table 1\. Differential expression summary by contrast**
+**Table 1. Differential expression summary by contrast**
 
-|  contrast | Number of genes tested | Number of genes with  FDR \< 0.05 | Number of genes with  FDR \< 0.05 and |log2FC| ≥ 1 | med\_absLFC\_sig  (rounded to 3 decimal places) |
-| :---- | ----- | ----- | ----- | ----- |
-| early vs thin   | 5957 | 2194 | 1119 | 1.009 |
+| contrast | Number of genes tested | Number of genes with FDR < 0.05 | Number of genes with FDR < 0.05 and \|log2FC\| ≥ 1 | med_absLFC_sig (rounded to 3 decimal places) |
+| :-- | --: | --: | --: | --: |
+| early vs thin | 5957 | 2194 | 1119 | 1.009 |
 | thin vs mature | 5957 | 2352 | 1320 | 1.059 |
 | early vs mature | 5957 | 2968 | 1866 | 1.193 |
 
@@ -58,7 +58,6 @@ Two representative, highly significant terms were:
 * **GO:0009185 – ribonucleoside diphosphate metabolic process**: NES \= **2.756**, FDR (**p.adjust**) \= **6.02×10⁻⁹**, leading-edge **21/35 genes** (GeneRatio \= **0.60**)
 
 * **GO:0032543 – mitochondrial translation**: NES \= **−2.531**, FDR (**p.adjust**) \= **6.02×10⁻⁹**, leading-edge **84/135 genes** (GeneRatio \= **0.62**)
-
 
 
 ![Figure 4. GSEA dotplot (GO BP) for early vs mature](results/figures/GSEA_GO_BP_dotplot_early_vs_mature.png)
